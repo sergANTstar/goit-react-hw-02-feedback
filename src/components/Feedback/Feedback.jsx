@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 
 
-export const Feedback = ({handleGood, handleNeutral, handleBad}) => {
+export const Feedback = ({feedback, clickfeedback}) => {
+    const {good, neutral, bad} = feedback;
+
     return (
         <div className={css.feedback}>
             <div>
@@ -11,21 +13,27 @@ export const Feedback = ({handleGood, handleNeutral, handleBad}) => {
                 <ul className={css.feedback__list}>
                 <li>
                     <button
-                        onClick={handleGood}
+                        onClick={clickfeedback}
+                        name="good"
+                        value={good}
                         className={css.feedback__button}>
                             Good
                     </button >
                 </li>
                 <li>
                     <button
-                        onClick={handleNeutral} 
+                        onClick={clickfeedback} 
+                        name="neutral"
+                        value={neutral}
                         className={css.feedback__button}>
                             Neutral
                     </button>
                 </li>
                 <li>
                     <button
-                        onClick={handleBad} 
+                        onClick={clickfeedback} 
+                        name="bad"
+                        value={bad}
                         className={css.feedback__button}>
                             Bad
                     </button>
@@ -37,7 +45,10 @@ export const Feedback = ({handleGood, handleNeutral, handleBad}) => {
 };
 
 Feedback.protoType = {
-    handleGood: PropTypes.func,
-    handleNeutral: PropTypes.func,
-    handleBad: PropTypes.func,
+    feedback: PropTypes.shape({
+        good: PropTypes.number,
+        neutral: PropTypes.number,
+        bad: PropTypes.number,
+      }).isRequired,
+      clickfeedback: PropTypes.func.isRequired,
 };

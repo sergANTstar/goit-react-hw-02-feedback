@@ -10,24 +10,6 @@ class ExpressoCafeFeedbac extends React.Component {
         bad:0,
     };
 
-    handleNeutral =() =>{
-        this.setState({
-            neutral: this.state.neutral + 1,
-        });
-    };
-
-    handleBad =() =>{
-        this.setState({
-            bad: this.state.bad + 1,
-        });
-    };
-
-    handleGood =() =>{
-        this.setState({
-            good: this.state.good + 1,
-        });
-    };
-
     totalFeedback =() => {
         const {good, neutral, bad} = this.state;
         return good + neutral + bad;
@@ -37,21 +19,37 @@ class ExpressoCafeFeedbac extends React.Component {
         return parseInt((this.state.good / this.totalFeedback()) * 100);
     };
 
+    hendleCange = e => {
+        const { name } = e.target;
+        this.setState(prevState => ({
+          [name]: prevState[name] + 1,
+        }));
+
+        this.positivePercentage();
+        this.totalFeedback()
+       }
+
+
+
+    
+
     render () {
+
+        const feedback = this.totalFeedback();
+        
         return (
             <div>
                 <Feedback
-                handleGood = {this.handleGood}
-                handleNeutral = {this.handleNeutral}
-                handleBad = {this.handleBad}
+                feedback ={this.state}
+                clickfeedback = {this.hendleCange}
                 /> 
             
-                {this.totalFeedback() ? (
+                {feedback ? (
                     <Statistics
                     good={this.state.good}
                     neutral={this.state.neutral}
                     bad={this.state.bad}
-                    total={this.totalFeedback()}
+                    total={feedback}
                     pisitivePercentage={this.positivePercentage()}
                     />
                 ) : (<p className='no__feedback'>There is no feedback</p>)}
